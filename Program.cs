@@ -4,14 +4,37 @@ namespace DIO.Series
 {
     class Program
     {
-        static SerieRepositorio repositorio = new SerieRepositorio();
-        static void Main(string[] args)
-        {
-            string opcaoUsuario = ObterOpcaoUsuario();
+		static void Main (string[] args)
+		{
+			string  opcaoUsuario = OpcaoDesejada();
 
 			while (opcaoUsuario.ToUpper() != "X")
 			{
 				switch (opcaoUsuario)
+				{
+					case "1":
+						trabalharComSerie();
+						break;
+					case "2":
+						trabalharComFilme();
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+				opcaoUsuario = OpcaoDesejada();
+			}
+			Console.WriteLine("Obrigado por utilizar nossos serviços.");
+			Console.ReadLine();
+
+		}
+        static SerieRepositorio repositorio = new SerieRepositorio();
+        private static void trabalharComSerie()
+        {
+            string opcaoUsuarioSerie = ObterOpcaoUsuarioSerie();
+
+			while (opcaoUsuarioSerie.ToUpper() != "X")
+			{
+				switch (opcaoUsuarioSerie)
 				{
 					case "1":
 						ListarSeries();
@@ -36,7 +59,7 @@ namespace DIO.Series
 						throw new ArgumentOutOfRangeException();
 				}
 
-				opcaoUsuario = ObterOpcaoUsuario();
+				opcaoUsuarioSerie = ObterOpcaoUsuarioSerie();
 			}
 
 			Console.WriteLine("Obrigado por utilizar nossos serviços.");
@@ -140,7 +163,7 @@ namespace DIO.Series
 			repositorio.Insere(novaSerie);
 		}
 
-        private static string ObterOpcaoUsuario()
+        private static string ObterOpcaoUsuarioSerie()
 		{
 			Console.WriteLine();
 			Console.WriteLine("DIO Séries a seu dispor!!!");
@@ -160,13 +183,13 @@ namespace DIO.Series
 			return opcaoUsuario;
 		}
 		static FilmeRepositorio repositorioF = new FilmeRepositorio();
-        static void Main(string[] args)
+        private static void trabalharComFilme()
         {
-            string opcaoUsuario = ObterOpcaoUsuarioFilme();
+            string opcaoUsuarioFilme = ObterOpcaoUsuarioFilme();
 
-			while (opcaoUsuario.ToUpper() != "X")
+			while (opcaoUsuarioFilme.ToUpper() != "X")
 			{
-				switch (opcaoUsuario)
+				switch (opcaoUsuarioFilme)
 				{
 					case "1":
 						ListarFilmes();
@@ -191,7 +214,7 @@ namespace DIO.Series
 						throw new ArgumentOutOfRangeException();
 				}
 
-				opcaoUsuario = ObterOpcaoUsuarioFilme();
+				opcaoUsuarioFilme = ObterOpcaoUsuarioFilme();
 			}
 
 			Console.WriteLine("Obrigado por utilizar nossos serviços.");
@@ -203,7 +226,7 @@ namespace DIO.Series
 			Console.Write("Digite o id do filme: ");
 			int indiceFilme = int.Parse(Console.ReadLine());
 
-			repositorio.Exclui(indiceFilme);
+			repositorioF.Exclui(indiceFilme);
 		}
 
         private static void VisualizarFilme()
@@ -211,7 +234,7 @@ namespace DIO.Series
 			Console.Write("Digite o id do filme: ");
 			int indiceFilme = int.Parse(Console.ReadLine());
 
-			var filme = repositorio.RetornaPorId(indiceFilme);
+			var filme = repositorioF.RetornaPorId(indiceFilme);
 
 			Console.WriteLine(filme);
 		}
@@ -306,6 +329,21 @@ namespace DIO.Series
 			Console.WriteLine("4- Excluir filme");
 			Console.WriteLine("5- Visualizar filme");
 			Console.WriteLine("C- Limpar Tela");
+			Console.WriteLine("X- Sair");
+			Console.WriteLine();
+
+			string opcaoUsuario = Console.ReadLine().ToUpper();
+			Console.WriteLine();
+			return opcaoUsuario;
+		}
+		private static string OpcaoDesejada()
+		{
+			Console.WriteLine();
+			Console.WriteLine("DIO Séries e Filmes a seu dispor!!!");
+			Console.WriteLine("Informe a opção desejada:");	
+
+			Console.WriteLine("1- Serie");
+			Console.WriteLine("2- Filme");
 			Console.WriteLine("X- Sair");
 			Console.WriteLine();
 
